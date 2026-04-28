@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 编导助手 - 智能素材库</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass-panel">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 10L19.5528 7.72361C20.2177 7.39116 21 7.87465 21 8.61803V15.382C21 16.1253 20.2177 16.6088 19.5528 16.2764L15 14V10Z" stroke="url(#paint0_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="3" y="6" width="12" height="12" rx="2" stroke="url(#paint1_linear)" stroke-width="2" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="15" y1="11.8618" x2="21" y2="11.8618" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#4F46E5"/>
+                            <stop offset="1" stop-color="#EC4899"/>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear" x1="3" y1="12" x2="15" y2="12" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#4F46E5"/>
+                            <stop offset="1" stop-color="#EC4899"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>AI 编导助手</h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="gallery">素材图库</a>
+                <a href="#" class="nav-item" data-view="edit">智能剪辑 <span class="badge">Pro</span></a>
+                <a href="#" class="nav-item">生成分镜</a>
+            </nav>
+            
+            <div class="scanner-section">
+                <h3>素材扫描器</h3>
+                <div class="input-group">
+                    <input type="text" id="dir-input" placeholder="/Users/h-l/Movies">
+                    <button id="browse-btn" class="btn-icon" title="浏览文件夹">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    </button>
+                </div>
+                <button id="scan-btn" class="btn-primary w-full" style="width: 100%; margin-bottom: 12px;">开始扫描</button>
+                <div id="scanner-logs" class="logs-container">
+                    <!-- Logs will appear here -->
+                    <div class="log-placeholder">等待扫描...</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header glass-panel">
+                <div class="search-bar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="search-input" placeholder="输入你想找的画面 (例如：微笑、阳光、激烈运动)...">
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" id="refresh-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                    </button>
+                </div>
+            </header>
+
+            <div id="view-gallery" class="view-container active">
+                <div class="tabs-header">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="all">全部素材 <span id="video-count">0</span></button>
+                        <button class="tab-btn" data-tab="grouped">智能分类</button>
+                    </div>
+                </div>
+
+                <div class="gallery-container tab-content active" id="tab-all">
+                    <div id="video-grid" class="video-grid">
+                        <!-- Video cards -->
+                    </div>
+                </div>
+
+                <div class="gallery-container tab-content" id="tab-grouped" style="display: none;">
+                    <div id="grouped-grid">
+                        <!-- Grouped categories -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-edit" class="view-container" style="display: none; background: #000; height: 100vh;">
+                <div class="editor-workspace">
+                    <!-- Top Section: Player and Assistant -->
+                    <div class="editor-top">
+                        <div class="editor-player-container">
+                            <video id="preview-player" controls preload="metadata">
+                                您的浏览器不支持视频播放。
+                            </video>
+                            <div class="player-overlay" id="player-overlay">点击下方轨道片段进行预览</div>
+                        </div>
+                        
+                        <div class="editor-sidebar glass-panel">
+                            <div class="assistant-header">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#paint0_linear)" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 2a10 10 0 0 1 10 10H12V2z"></path></svg>
+                                <span>AI 剪辑助理</span>
+                            </div>
+                            <div class="assistant-chat" id="assistant-chat">
+                                <div class="chat-message ai">告诉我你的剪辑想法，例如：“帮我剪一个动感的运动高光。”</div>
+                            </div>
+                            <div class="assistant-input-box">
+                                <textarea id="edit-prompt" placeholder="描述你想要的视频..."></textarea>
+                                <button id="generate-edit-btn" class="btn-primary">生成轨道</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom Section: Timeline -->
+                    <div class="editor-bottom glass-panel">
+                        <div class="timeline-header">
+                            <div class="timeline-tools">
+                                <span style="color: white; font-weight: bold; font-size: 14px;">时间轴轨道序列</span>
+                                <span id="timeline-duration" style="color: var(--text-secondary); margin-left: 12px; font-family: monospace;">00:00:00</span>
+                            </div>
+                            <div class="timeline-export">
+                                <button id="export-btn" class="btn-primary">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    导出工程
+                                </button>
+                            </div>
+                        </div>
+                        <div class="timeline-tracks-container" id="timeline-tracks-container">
+                            <div class="time-ruler" id="time-ruler">
+                                <!-- Ruler markings will go here -->
+                            </div>
+                            <div class="track video-track" id="main-video-track">
+                                <div class="empty-track-msg">轨道为空，请在上方输入指令让 AI 生成。</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/static/app.js"></script>
+</body>
+</html>

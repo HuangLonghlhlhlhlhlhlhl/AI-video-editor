@@ -267,8 +267,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Smart Edit & Editor Workspace ---
     const addChatMessage = (text, sender) => {
         const msg = document.createElement('div');
-        msg.className = `chat-message ${sender}`;
-        msg.textContent = text;
+        msg.className = 'flex items-start gap-2 mt-2 ' + (sender === 'user' ? 'flex-row-reverse' : '');
+        
+        const avatar = document.createElement('div');
+        avatar.className = sender === 'user' 
+            ? 'w-6 h-6 rounded-full bg-[#353534] flex items-center justify-center flex-shrink-0'
+            : 'w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(62,82,255,0.3)]';
+        avatar.innerHTML = `<span class="material-symbols-outlined text-white text-[14px]">${sender === 'user' ? 'person' : 'smart_toy'}</span>`;
+        
+        const bubble = document.createElement('div');
+        bubble.className = sender === 'user'
+            ? 'bg-primary-container text-on-primary-container p-2.5 rounded-lg rounded-tr-none max-w-[85%] text-[12px] font-body-md leading-relaxed whitespace-pre-wrap'
+            : 'bg-surface-container p-2.5 rounded-lg rounded-tl-none border border-outline-variant max-w-[85%] text-[12px] text-zinc-300 font-body-md leading-relaxed whitespace-pre-wrap';
+        bubble.textContent = text;
+        
+        msg.appendChild(avatar);
+        msg.appendChild(bubble);
+        
         assistantChat.appendChild(msg);
         assistantChat.scrollTop = assistantChat.scrollHeight;
     };
@@ -331,6 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.previewVideo = (encodedPath) => {
         if(!previewPlayer) return;
         playerOverlay.style.display = 'none';
+        previewPlayer.classList.remove('hidden');
         previewPlayer.src = `/api/media?path=${encodedPath}`;
         previewPlayer.play();
     };
@@ -372,6 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 block.classList.add('active');
                 
                 playerOverlay.style.display = 'none';
+                previewPlayer.classList.remove('hidden');
                 previewPlayer.src = `/api/media?path=${encodeURIComponent(item.file_path)}`;
                 // When metadata loaded, jump to start
                 previewPlayer.onloadedmetadata = () => {

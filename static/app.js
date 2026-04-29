@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scanBtn.disabled = true;
         scanBtn.innerHTML = `
             <span class="material-symbols-outlined text-[18px] animate-spin">sync</span>
-            <span class="text-xs">Scanning...</span>
+            <span class="text-xs">扫描中...</span>
         `;
         logsContainer.innerHTML = '';
 
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             scanBtn.disabled = false;
             scanBtn.innerHTML = `
                 <span class="material-symbols-outlined text-[18px]">sync</span>
-                <span class="text-xs">Scan Local</span>
+                <span class="text-xs">本地扫描</span>
             `;
         }
     };
@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetExportState = () => {
         if(exportBtn) {
             exportBtn.disabled = false;
-            exportBtn.innerHTML = 'Render Export';
+            exportBtn.innerHTML = '渲染导出';
         }
     };
 

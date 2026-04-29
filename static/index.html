@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html class="dark" lang="zh-CN">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -49,20 +49,20 @@
     <!-- TopNavBar -->
     <header class="flex justify-between items-center px-3 w-full h-10 z-50 bg-[#1C1C1C] border-b border-[#FFFFFF15] flex-shrink-0">
         <div class="flex items-center gap-6">
-            <span class="text-sm font-bold text-white uppercase tracking-widest">Gravity Edit Pro</span>
+            <span class="text-sm font-bold text-white tracking-widest">Gravity Edit Pro</span>
             <nav class="flex gap-4">
-                <a class="font-label-bold text-[13px] text-white hover:bg-[#FFFFFF10] px-2 py-1 rounded" href="#">File</a>
-                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">Edit</a>
-                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">Sequence</a>
-                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">Window</a>
+                <a class="font-label-bold text-[13px] text-white hover:bg-[#FFFFFF10] px-2 py-1 rounded" href="#">文件</a>
+                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">编辑</a>
+                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">序列</a>
+                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">窗口</a>
             </nav>
         </div>
         <div class="flex items-center gap-3">
             <button id="scan-btn" class="flex items-center gap-1 text-gray-400 hover:text-white mr-2">
                 <span class="material-symbols-outlined text-[18px]">sync</span>
-                <span class="text-xs">Scan Local</span>
+                <span class="text-xs">本地扫描</span>
             </button>
-            <button id="export-btn" class="bg-gradient-to-br from-[#3E52FF] to-[#6f00be] text-white px-4 py-1 rounded text-[12px] font-semibold hover:opacity-90 transition-opacity">Render Export</button>
+            <button id="export-btn" class="bg-gradient-to-br from-[#3E52FF] to-[#6f00be] text-white px-4 py-1 rounded text-[12px] font-semibold hover:opacity-90 transition-opacity">渲染导出</button>
         </div>
     </header>
 
@@ -93,15 +93,15 @@
             <!-- Asset Library -->
             <section class="col-span-3 row-span-7 bg-[#1C1C1C] flex flex-col border border-[#FFFFFF05] rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between px-3 py-2 border-b border-[#FFFFFF05]">
-                    <span class="font-label-bold text-[11px] text-on-surface-variant uppercase">Asset Library</span>
-                    <button id="browse-btn" class="material-symbols-outlined text-gray-500 text-sm hover:text-white transition-colors cursor-pointer">add_folder</button>
+                    <span class="font-label-bold text-[12px] text-on-surface-variant uppercase">素材库</span>
+                    <button id="browse-btn" class="material-symbols-outlined text-gray-500 text-sm hover:text-white transition-colors cursor-pointer" title="添加文件夹">add_folder</button>
                 </div>
-                <div class="flex border-b border-[#FFFFFF05] text-[10px] font-label-bold uppercase">
-                    <button id="tab-all" class="flex-1 py-1.5 border-b-2 border-primary text-white bg-surface-container-high tab-btn" data-tab="all">All Media</button>
-                    <button id="tab-grouped" class="flex-1 py-1.5 border-b-2 border-transparent text-gray-500 hover:text-white tab-btn" data-tab="grouped">AI Groups</button>
+                <div class="flex border-b border-[#FFFFFF05] text-[11px] font-label-bold">
+                    <button id="tab-all" class="flex-1 py-1.5 border-b-2 border-primary text-white bg-surface-container-high tab-btn" data-tab="all">全部素材</button>
+                    <button id="tab-grouped" class="flex-1 py-1.5 border-b-2 border-transparent text-gray-500 hover:text-white tab-btn" data-tab="grouped">AI 分类</button>
                 </div>
                 <!-- Local Path Input (Hidden but functional) -->
-                <input type="text" id="dir-input" class="hidden" placeholder="Enter directory path...">
+                <input type="text" id="dir-input" class="hidden" placeholder="输入文件夹路径...">
                 
                 <div class="flex-1 overflow-y-auto custom-scrollbar p-2" id="library-container">
                     <div id="video-grid" class="grid grid-cols-2 gap-2 content-start tab-content block">
@@ -129,7 +129,7 @@
                     <!-- Overlay for empty state -->
                     <div id="player-overlay" class="absolute inset-0 flex flex-col items-center justify-center text-zinc-600">
                         <span class="material-symbols-outlined text-[48px] mb-2 opacity-50">smart_display</span>
-                        <p class="text-xs font-label-bold uppercase tracking-widest">Select clip to preview</p>
+                        <p class="text-xs font-label-bold tracking-widest">选择片段以预览</p>
                     </div>
 
                     <!-- Glassmorphic floating controls -->
@@ -146,8 +146,8 @@
             <!-- Inspector & AI Panel -->
             <section class="col-span-3 row-span-12 bg-[#1C1C1C] flex flex-col border border-[#FFFFFF05] rounded-lg overflow-hidden">
                 <div class="flex border-b border-[#FFFFFF05]">
-                    <button class="flex-1 py-2 font-label-bold text-[11px] text-white border-b-2 border-primary-container">AI ASSISTANT</button>
-                    <button class="flex-1 py-2 font-label-bold text-[11px] text-gray-500 hover:text-white">INSPECTOR</button>
+                    <button class="flex-1 py-2 font-label-bold text-[12px] text-white border-b-2 border-primary-container">AI 助理</button>
+                    <button class="flex-1 py-2 font-label-bold text-[12px] text-gray-500 hover:text-white">检查器</button>
                 </div>
                 
                 <!-- AI Assistant View -->
@@ -159,17 +159,17 @@
                             </div>
                             <div class="bg-surface-container p-2.5 rounded-lg rounded-tl-none border border-outline-variant max-w-[85%]">
                                 <p class="text-[12px] text-zinc-300 font-body-md leading-relaxed">
-                                    I'm Gravity AI. Give me an edit prompt and I'll assemble a rough cut for you based on the assets in the library.
+                                    我是 Gravity AI。告诉我你的剪辑想法，我将根据素材库为你生成一条初剪序列。
                                 </p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="p-3 border-t border-[#FFFFFF05] bg-surface">
-                        <textarea id="edit-prompt" class="w-full h-20 bg-surface-container-high border border-outline-variant rounded-md p-2 text-xs text-white placeholder-zinc-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all custom-scrollbar resize-none mb-2" placeholder="e.g. Create a fast-paced cyberpunk trailer using the neon shots..."></textarea>
-                        <button id="generate-edit-btn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-label-bold text-xs py-2 rounded-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(59,130,246,0.2)]">
+                        <textarea id="edit-prompt" class="w-full h-20 bg-surface-container-high border border-outline-variant rounded-md p-2 text-[12px] text-white placeholder-zinc-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all custom-scrollbar resize-none mb-2" placeholder="例如：用这些霓虹灯素材帮我剪一个快节奏的赛博朋克预告片..."></textarea>
+                        <button id="generate-edit-btn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-label-bold text-[12px] py-2 rounded-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(59,130,246,0.2)]">
                             <span class="material-symbols-outlined text-[16px]">movie_edit</span>
-                            Generate Sequence
+                            生成序列
                         </button>
                     </div>
                 </div>
@@ -243,31 +243,31 @@
     <footer class="fixed bottom-0 left-0 w-full z-50 flex justify-center items-center h-12 space-x-8 px-10 bg-[#1C1C1C] border-t border-[#FFFFFF15]">
         <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
             <span class="material-symbols-outlined text-[20px]">perm_media</span>
-            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Media</span>
+            <span class="font-label-bold text-[10px] mt-0.5">媒体</span>
         </button>
         <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
             <span class="material-symbols-outlined text-[20px]">content_cut</span>
-            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Cut</span>
+            <span class="font-label-bold text-[10px] mt-0.5">快剪</span>
         </button>
         <button class="flex flex-col items-center group transition-all duration-200 text-blue-500 border-t-2 border-blue-500 pt-1">
             <span class="material-symbols-outlined text-[20px]">movie_edit</span>
-            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Edit</span>
+            <span class="font-label-bold text-[10px] mt-0.5">编辑</span>
         </button>
         <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
             <span class="material-symbols-outlined text-[20px]">auto_fix_normal</span>
-            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Fusion</span>
+            <span class="font-label-bold text-[10px] mt-0.5">特效</span>
         </button>
         <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
             <span class="material-symbols-outlined text-[20px]">palette</span>
-            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Color</span>
+            <span class="font-label-bold text-[10px] mt-0.5">调色</span>
         </button>
         <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
             <span class="material-symbols-outlined text-[20px]">graphic_eq</span>
-            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Fairlight</span>
+            <span class="font-label-bold text-[10px] mt-0.5">音频</span>
         </button>
         <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
             <span class="material-symbols-outlined text-[20px]">ios_share</span>
-            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Deliver</span>
+            <span class="font-label-bold text-[10px] mt-0.5">交付</span>
         </button>
     </footer>
 

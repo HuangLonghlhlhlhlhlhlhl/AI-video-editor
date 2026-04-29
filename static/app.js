@@ -29,6 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const playerOverlay = document.getElementById('player-overlay');
     const timelineDuration = document.getElementById('timeline-duration');
     const exportBtn = document.getElementById('export-btn');
+    const playerTime = document.getElementById('player-time');
+    const playPauseIcon = document.getElementById('play-pause-icon');
+
+    if (previewPlayer) {
+        previewPlayer.addEventListener('timeupdate', () => {
+            if(playerTime) playerTime.textContent = formatTime(previewPlayer.currentTime);
+        });
+        previewPlayer.addEventListener('play', () => {
+            if(playPauseIcon) playPauseIcon.textContent = 'pause';
+        });
+        previewPlayer.addEventListener('pause', () => {
+            if(playPauseIcon) playPauseIcon.textContent = 'play_arrow';
+        });
+    }
 
     let allVideos = [];
     let statusInterval = null;
@@ -50,11 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             tabBtns.forEach(b => {
-                b.classList.remove('active', 'border-primary', 'text-primary');
-                b.classList.add('border-transparent', 'text-zinc-500');
+                b.classList.remove('active', 'border-primary', 'text-white', 'bg-surface-container-high');
+                b.classList.add('border-transparent', 'text-gray-500');
             });
-            btn.classList.add('active', 'border-primary', 'text-primary');
-            btn.classList.remove('border-transparent', 'text-zinc-500');
+            btn.classList.add('active', 'border-primary', 'text-white', 'bg-surface-container-high');
+            btn.classList.remove('border-transparent', 'text-gray-500');
             
             const targetTab = btn.getAttribute('data-tab');
             tabContents.forEach(c => {
@@ -110,7 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         scanBtn.disabled = true;
-        scanBtn.textContent = '扫描中...';
+        scanBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[18px] animate-spin">sync</span>
+            <span class="text-xs">Scanning...</span>
+        `;
         logsContainer.innerHTML = '';
 
         try {
@@ -162,7 +179,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetScanState = () => {
         if(scanBtn) {
             scanBtn.disabled = false;
-            scanBtn.textContent = '开始扫描';
+            scanBtn.innerHTML = `
+                <span class="material-symbols-outlined text-[18px]">sync</span>
+                <span class="text-xs">Scan Local</span>
+            `;
         }
     };
 
@@ -299,9 +319,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const formatTime = (seconds) => {
-        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
         const s = Math.floor(seconds % 60).toString().padStart(2, '0');
-        return `00:${m}:${s}`;
+        const ms = Math.floor((seconds % 1) * 100).toString().padStart(2, '0');
+        return `${h}:${m}:${s}:${ms}`;
     };
 
     let currentTimeline = [];

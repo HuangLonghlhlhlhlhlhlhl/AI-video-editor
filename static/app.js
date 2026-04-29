@@ -106,14 +106,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Browse & Scan ---
     if(browseBtn) browseBtn.addEventListener('click', async () => {
+        if(addChatMessage) addChatMessage("正在唤起系统文件夹选择器...", "ai");
         if (window.pywebview && window.pywebview.api) {
-            const path = await window.pywebview.api.browse_directory();
-            if (path) {
-                dirInput.value = path;
-                if(scanBtn) scanBtn.click(); // Automatically trigger scan
+            try {
+                const path = await window.pywebview.api.browse_directory();
+                if (path) {
+                    dirInput.value = path;
+                    if(scanBtn) scanBtn.click(); // Automatically trigger scan
+                } else {
+                    if(addChatMessage) addChatMessage("已取消选择文件夹。", "ai");
+                }
+            } catch (e) {
+                if(addChatMessage) addChatMessage("唤起选择器失败: " + e, "ai");
             }
         } else {
-            alert("请使用原生桌面客户端打开此功能");
+            const promptPath = prompt("原生接口未就绪，请手动输入包含素材的绝对路径：", "/Users/h-l/Desktop/智能视频剪辑");
+            if (promptPath) {
+                dirInput.value = promptPath;
+                if(scanBtn) scanBtn.click();
+            }
         }
     });
 
@@ -208,11 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const filename = v.file_path.split('/').pop() || v.file_path;
 
         card.innerHTML = `
-            <div class="video-thumbnail" style="cursor: pointer;" onclick="previewVideo('${encodeURIComponent(v.file_path)}')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                </svg>
+            <div class="video-thumbnail bg-black" style="cursor: pointer; position: relative;" onclick="previewVideo('${encodeURIComponent(v.file_path)}')">
+                <video src="/api/media?path=${encodeURIComponent(v.file_path)}#t=1.0" class="w-full h-full object-cover opacity-80 hover:opacity-100" preload="metadata" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>
             </div>
             <div class="video-content">
                 <div class="video-title" title="${v.file_path}">&lrm;${filename}</div>
@@ -258,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title.textContent = `${groupName} (${videos.length})`;
             
             const grid = document.createElement('div');
-            grid.className = 'video-grid';
+            grid.className = 'grid grid-cols-2 gap-2 content-start';
             
             videos.forEach(v => grid.appendChild(createVideoCard(v)));
             

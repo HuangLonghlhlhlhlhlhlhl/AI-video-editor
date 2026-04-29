@@ -135,9 +135,18 @@
                     <span class="material-symbols-outlined">graphic_eq</span>
                 </div>
             </div>
-            <div class="mt-auto flex flex-col items-center gap-4 w-full">
+            <div class="mt-auto flex flex-col items-center gap-4 w-full relative group">
                 <div class="text-gray-500 p-2 hover:text-white hover:bg-[#FFFFFF05] rounded-md transition-all cursor-pointer">
                     <span class="material-symbols-outlined">settings</span>
+                </div>
+                <!-- Settings Dropdown -->
+                <div class="absolute left-14 bottom-0 w-48 bg-[#1C1C1C] border border-[#FFFFFF15] rounded-md shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-100 z-50">
+                    <ul class="py-1.5 text-[12px] text-gray-300 font-label-bold text-left">
+                        <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>全局设置</span><span class="text-gray-500 group-hover/li:text-gray-300 text-[10px]">⌘,</span></li>
+                        <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>快捷键设置</span><span class="text-gray-500 text-[10px]">⌥⌘K</span></li>
+                        <div class="h-[1px] bg-[#FFFFFF10] my-1.5 w-[90%] mx-auto"></div>
+                        <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>关于 Gravity Edit</span></li>
+                    </ul>
                 </div>
             </div>
         </aside>
@@ -234,8 +243,15 @@
             <section class="col-span-9 row-span-5 bg-[#1C1C1C] flex flex-col border border-[#FFFFFF05] rounded-lg overflow-hidden relative">
                 <!-- Timeline Header / Tools -->
                 <div class="flex items-center justify-between px-3 h-8 border-b border-[#FFFFFF05] bg-[#1C1C1C] flex-shrink-0">
-                    <div class="flex items-center gap-4">
-                        <div class="flex items-center gap-1">
+                    <div class="flex items-center gap-2 h-full">
+                        <div class="flex items-center gap-1 border-r border-[#FFFFFF15] pr-3 h-full overflow-hidden min-w-[100px]">
+                            <div class="flex items-center bg-[#FFFFFF10] px-3 py-1 rounded-sm cursor-pointer group/seq">
+                                <span class="text-[11px] font-label-bold text-white">主序列_01</span>
+                                <span class="material-symbols-outlined text-[12px] text-gray-400 ml-2 hover:text-white opacity-0 group-hover/seq:opacity-100">close</span>
+                            </div>
+                            <span class="material-symbols-outlined text-[14px] text-gray-500 hover:text-white cursor-pointer ml-1" title="新建序列">add</span>
+                        </div>
+                        <div class="flex items-center gap-1 pl-1">
                             <div class="p-1 bg-primary-container text-white rounded"><span class="material-symbols-outlined text-sm">near_me</span></div>
                             <div class="p-1 text-gray-400 hover:text-white cursor-pointer"><span class="material-symbols-outlined text-sm">content_cut</span></div>
                         </div>
@@ -270,9 +286,12 @@
                         </div>
 
                         <!-- V1 Track -->
-                        <div class="flex h-12 border-b border-[#FFFFFF05] bg-[#10131a]/50">
-                            <div class="w-12 sticky left-0 z-20 bg-[#1C1C1C] flex flex-col justify-center px-2 border-r border-[#FFFFFF05]">
-                                <span class="text-[10px] font-bold text-gray-500 uppercase">V1</span>
+                        <div class="flex h-12 border-b border-[#FFFFFF05] bg-[#10131a]/50 group/track relative">
+                            <div class="w-16 sticky left-0 z-20 bg-[#1C1C1C] flex items-center justify-between px-2 border-r border-[#FFFFFF05] group-hover/track:bg-[#202020]">
+                                <span class="text-[10px] font-bold text-gray-500 group-hover/track:text-white uppercase">V1</span>
+                                <div class="flex gap-1 opacity-50 hover:opacity-100">
+                                    <span class="material-symbols-outlined text-[14px] text-gray-400 hover:text-white cursor-pointer" title="隐藏轨道">visibility</span>
+                                </div>
                             </div>
                             <div class="flex-1 relative" id="main-video-track">
                                 <!-- Clips injected here by app.js -->
@@ -280,12 +299,22 @@
                         </div>
 
                         <!-- A1 Track -->
-                        <div class="flex h-10 border-b border-[#FFFFFF05] bg-[#10131a]/30">
-                            <div class="w-12 sticky left-0 z-20 bg-[#1C1C1C] flex flex-col justify-center px-2 border-r border-[#FFFFFF05]">
-                                <span class="text-[10px] font-bold text-gray-500 uppercase">A1</span>
+                        <div class="flex h-10 border-b border-[#FFFFFF05] bg-[#10131a]/30 group/track relative">
+                            <div class="w-16 sticky left-0 z-20 bg-[#1C1C1C] flex items-center justify-between px-2 border-r border-[#FFFFFF05] group-hover/track:bg-[#202020]">
+                                <span class="text-[10px] font-bold text-gray-500 group-hover/track:text-white uppercase">A1</span>
+                                <div class="flex gap-1 opacity-50 hover:opacity-100">
+                                    <span class="material-symbols-outlined text-[14px] text-gray-400 hover:text-white cursor-pointer" title="静音轨道">volume_up</span>
+                                </div>
                             </div>
                             <div class="flex-1 relative">
                                 <div class="absolute inset-0 opacity-20 pointer-events-none waveform-bg"></div>
+                            </div>
+                        </div>
+
+                        <!-- Add Track Controls -->
+                        <div class="flex h-8 bg-transparent">
+                            <div class="w-16 sticky left-0 z-20 bg-[#1C1C1C] flex items-center justify-center border-r border-[#FFFFFF05]">
+                                <span class="material-symbols-outlined text-[16px] text-gray-500 hover:text-white cursor-pointer" title="添加音视频轨道">add_box</span>
                             </div>
                         </div>
                     </div>

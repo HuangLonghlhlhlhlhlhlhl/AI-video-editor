@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const path = await window.pywebview.api.browse_directory();
             if (path) {
                 dirInput.value = path;
+                if(scanBtn) scanBtn.click(); // Automatically trigger scan
             }
         } else {
             alert("请使用原生桌面客户端打开此功能");

@@ -50,11 +50,66 @@
     <header class="flex justify-between items-center px-3 w-full h-10 z-50 bg-[#1C1C1C] border-b border-[#FFFFFF15] flex-shrink-0">
         <div class="flex items-center gap-6">
             <span class="text-sm font-bold text-white tracking-widest">Gravity Edit Pro</span>
-            <nav class="flex gap-4">
-                <a class="font-label-bold text-[13px] text-white hover:bg-[#FFFFFF10] px-2 py-1 rounded" href="#">文件</a>
-                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">编辑</a>
-                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">序列</a>
-                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">窗口</a>
+            <nav class="flex gap-1 h-full items-center">
+                <!-- 文件菜单 -->
+                <div class="relative group h-full flex items-center">
+                    <button class="font-label-bold text-[13px] text-gray-300 hover:text-white hover:bg-[#FFFFFF10] px-3 py-1 rounded cursor-default">文件</button>
+                    <div class="absolute left-0 top-[30px] w-52 bg-[#1C1C1C] border border-[#FFFFFF15] rounded-md shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-100 z-50">
+                        <ul class="py-1.5 text-[12px] text-gray-300 font-label-bold">
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>新建项目</span><span class="text-gray-500 group-hover/li:text-gray-300 text-[10px]">⌘N</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>打开项目...</span><span class="text-gray-500 text-[10px]">⌘O</span></li>
+                            <div class="h-[1px] bg-[#FFFFFF10] my-1.5 w-[90%] mx-auto"></div>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="document.getElementById('browse-btn').click()"><span>导入媒体...</span><span class="text-gray-500 text-[10px]">⌘I</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>保存</span><span class="text-gray-500 text-[10px]">⌘S</span></li>
+                            <div class="h-[1px] bg-[#FFFFFF10] my-1.5 w-[90%] mx-auto"></div>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="document.getElementById('export-btn').click()"><span>导出</span><span class="text-gray-500 text-[10px]">⌘E</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 编辑菜单 -->
+                <div class="relative group h-full flex items-center">
+                    <button class="font-label-bold text-[13px] text-gray-300 hover:text-white hover:bg-[#FFFFFF10] px-3 py-1 rounded cursor-default">编辑</button>
+                    <div class="absolute left-0 top-[30px] w-48 bg-[#1C1C1C] border border-[#FFFFFF15] rounded-md shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-100 z-50">
+                        <ul class="py-1.5 text-[12px] text-gray-300 font-label-bold">
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>撤销</span><span class="text-gray-500 text-[10px]">⌘Z</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>重做</span><span class="text-gray-500 text-[10px]">⇧⌘Z</span></li>
+                            <div class="h-[1px] bg-[#FFFFFF10] my-1.5 w-[90%] mx-auto"></div>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>剪切</span><span class="text-gray-500 text-[10px]">⌘X</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>复制</span><span class="text-gray-500 text-[10px]">⌘C</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>粘贴</span><span class="text-gray-500 text-[10px]">⌘V</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>删除</span><span class="text-gray-500 text-[10px]">⌫</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 序列菜单 -->
+                <div class="relative group h-full flex items-center">
+                    <button class="font-label-bold text-[13px] text-gray-300 hover:text-white hover:bg-[#FFFFFF10] px-3 py-1 rounded cursor-default">序列</button>
+                    <div class="absolute left-0 top-[30px] w-56 bg-[#1C1C1C] border border-[#FFFFFF15] rounded-md shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-100 z-50">
+                        <ul class="py-1.5 text-[12px] text-gray-300 font-label-bold">
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="document.getElementById('generate-edit-btn').click()"><span>AI 一键生成剪辑序列</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>渲染入点到出点</span><span class="text-gray-500 text-[10px]">↩</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>清除所有空隙</span></li>
+                            <div class="h-[1px] bg-[#FFFFFF10] my-1.5 w-[90%] mx-auto"></div>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>自动匹配音乐节拍</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 窗口菜单 -->
+                <div class="relative group h-full flex items-center">
+                    <button class="font-label-bold text-[13px] text-gray-300 hover:text-white hover:bg-[#FFFFFF10] px-3 py-1 rounded cursor-default">窗口</button>
+                    <div class="absolute left-0 top-[30px] w-48 bg-[#1C1C1C] border border-[#FFFFFF15] rounded-md shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-100 z-50">
+                        <ul class="py-1.5 text-[12px] text-gray-300 font-label-bold">
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>重置工作区布局</span></li>
+                            <div class="h-[1px] bg-[#FFFFFF10] my-1.5 w-[90%] mx-auto"></div>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">check</span> 素材库</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">check</span> AI 助理</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">check</span> 检查器</span></li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
         <div class="flex items-center gap-3">

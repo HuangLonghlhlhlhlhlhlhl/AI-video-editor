@@ -16,6 +16,25 @@ class Api:
                 return result[0]
         return None
 
+    def save_project_dialog(self):
+        if self.window:
+            result = self.window.create_file_dialog(webview.SAVE_DIALOG, file_types=('Gravity Project (*.gravity)', 'All files (*.*)'))
+            return result
+        return None
+
+    def open_project_dialog(self):
+        if self.window:
+            result = self.window.create_file_dialog(webview.OPEN_DIALOG, file_types=('Gravity Project (*.gravity)', 'All files (*.*)'))
+            if result and len(result) > 0:
+                return result[0]
+        return None
+
+    def import_media_dialog(self):
+        if self.window:
+            result = self.window.create_file_dialog(webview.OPEN_DIALOG, multiselect=True, file_types=('Video files (*.mp4;*.mov;*.avi;*.mkv)', 'All files (*.*)'))
+            return result
+        return None
+
 def run_server():
     # Run the FastAPI server
     uvicorn.run(app, host="127.0.0.1", port=8000, log_level="warning")

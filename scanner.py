@@ -106,11 +106,7 @@ def analyze_video_with_gemini(file_path, logger=default_logger):
             pass
         return None
 
-def scan_directory(target_dir, logger=default_logger):
-    if not os.path.isdir(target_dir):
-        logger("error", f"Directory '{target_dir}' does not exist.")
-        return
-
+def scan_files(file_paths, logger=default_logger):
     if not os.getenv("GEMINI_API_KEY"):
         logger("error", "GEMINI_API_KEY is not configured in .env file.")
         return
@@ -118,11 +114,9 @@ def scan_directory(target_dir, logger=default_logger):
     logger("info", "Initializing database...")
     database.init_db()
 
-    logger("info", f"Scanning directory '{target_dir}' for videos...")
-    videos = get_video_files(target_dir)
-    logger("info", f"Found {len(videos)} video(s).")
+    logger("info", f"Processing {len(file_paths)} specific file(s)...")
 
-    for video_path in videos:
+    for video_path in file_paths:
         abs_path = os.path.abspath(video_path)
         filename = os.path.basename(video_path)
         
@@ -140,12 +134,28 @@ def scan_directory(target_dir, logger=default_logger):
             
             database.insert_video_data(abs_path, tags, highlights, description)
             logger("success", f"Successfully analyzed and stored metadata for {filename}")
-            logger("info", f"Tags found: {', '.join(tags)}")
-            logger("info", f"Highlights found: {len(highlights)}")
         else:
             logger("error", f"Failed to extract metadata for {filename}")
 
-    logger("done", "Scan completed!")
+    logger("done", "Import completed!")
+
+def scan_directory(target_dir, logger=default_logger):
+    if not os.path.isdir(target_dir):
+        logger("error", f"Directory '{target_dir}' does not exist.")
+        return
+
+    if not os.getenv("GEMINI_API_KEY"):
+        logger("error", "GEMINI_API_KEY is not configured in .env file.")
+        return
+
+    logger("info", "Initializing database...")
+    database.init_db()
+
+    logger("info", f"Scanning directory '{target_dir}' for videos...")
+    videos = get_video_files(target_dir)
+    logger("info", f"Found {len(videos)} video(s).")
+
+    scan_files(videos, logger=logger)
 
 def main():
     parser = argparse.ArgumentParser(description="AI Video Assets Scanner")

@@ -151,10 +151,37 @@ async def generate_edit_plan(req: EditRequest):
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
+from scanner import scan_directory, scan_files
+
+class FileImportRequest(BaseModel):
+    files: list
+
+def import_worker(files: list):
+    scan_state["is_scanning"] = True
+    scan_state["logs"] = []
+    
+    def logger(level, msg):
+        scan_state["logs"].append({"level": level, "message": msg})
+        
+    try:
+        scan_files(files, logger=logger)
+    except Exception as e:
+        logger("error", f"Import error: {e}")
+    finally:
+        scan_state["is_scanning"] = False
+
+@app.post("/api/import/files")
+async def start_import_files(req: FileImportRequest, background_tasks: BackgroundTasks):
+    if scan_state["is_scanning"]:
+        return {"status": "error", "message": "A scan or import is already in progress"}
+    
+    background_tasks.add_task(import_worker, req.files)
+    return {"status": "success", "message": "Import started"}
+
 @app.post("/api/scan")
 async def start_scan(req: ScanRequest, background_tasks: BackgroundTasks):
     if scan_state["is_scanning"]:
-        return {"status": "error", "message": "A scan is already in progress"}
+        return {"status": "error", "message": "A scan or import is already in progress"}
     
     background_tasks.add_task(scan_worker, req.directory)
     return {"status": "success", "message": "Scan started"}

@@ -56,11 +56,11 @@
                     <button class="font-label-bold text-[13px] text-gray-300 hover:text-white hover:bg-[#FFFFFF10] px-3 py-1 rounded cursor-default">文件</button>
                     <div class="absolute left-0 top-[30px] w-52 bg-[#1C1C1C] border border-[#FFFFFF15] rounded-md shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-100 z-50">
                         <ul class="py-1.5 text-[12px] text-gray-300 font-label-bold">
-                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>新建项目</span><span class="text-gray-500 group-hover/li:text-gray-300 text-[10px]">⌘N</span></li>
-                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>打开项目...</span><span class="text-gray-500 text-[10px]">⌘O</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="handleNewProject()"><span>新建项目</span><span class="text-gray-500 group-hover/li:text-gray-300 text-[10px]">⌘N</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="handleOpenProject()"><span>打开项目...</span><span class="text-gray-500 text-[10px]">⌘O</span></li>
                             <div class="h-[1px] bg-[#FFFFFF10] my-1.5 w-[90%] mx-auto"></div>
-                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="document.getElementById('browse-btn').click()"><span>导入媒体...</span><span class="text-gray-500 text-[10px]">⌘I</span></li>
-                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center"><span>保存</span><span class="text-gray-500 text-[10px]">⌘S</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="handleImportMedia()"><span>导入媒体...</span><span class="text-gray-500 text-[10px]">⌘I</span></li>
+                            <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="handleSaveProject()"><span>保存</span><span class="text-gray-500 text-[10px]">⌘S</span></li>
                             <div class="h-[1px] bg-[#FFFFFF10] my-1.5 w-[90%] mx-auto"></div>
                             <li class="px-4 py-1.5 hover:bg-[#3E52FF] hover:text-white cursor-pointer flex justify-between items-center" onclick="document.getElementById('export-btn').click()"><span>导出</span><span class="text-gray-500 text-[10px]">⌘E</span></li>
                         </ul>

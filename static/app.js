@@ -514,6 +514,68 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // --- File Menu Handlers ---
+    window.handleNewProject = async () => {
+        if (window.pywebview && window.pywebview.api) {
+            const path = await window.pywebview.api.save_project_dialog();
+            if (path) {
+                addChatMessage(`创建新项目：${path}`, "ai");
+                // TODO: Clear database or start new session
+            }
+        } else {
+            alert("请在原生客户端中使用此功能");
+        }
+    };
+
+    window.handleOpenProject = async () => {
+        if (window.pywebview && window.pywebview.api) {
+            const path = await window.pywebview.api.open_project_dialog();
+            if (path) {
+                addChatMessage(`打开项目：${path}`, "ai");
+                // TODO: Load project data
+            }
+        } else {
+            alert("请在原生客户端中使用此功能");
+        }
+    };
+
+    window.handleImportMedia = async () => {
+        if (window.pywebview && window.pywebview.api) {
+            const files = await window.pywebview.api.import_media_dialog();
+            if (files && files.length > 0) {
+                addChatMessage(`正在导入 ${files.length} 个媒体文件...`, "ai");
+                
+                try {
+                    await fetch('/api/import/files', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ files: files })
+                    });
+                    
+                    if (statusInterval) clearInterval(statusInterval);
+                    statusInterval = setInterval(pollStatus, 1000);
+                } catch (e) {
+                    console.error(e);
+                    addChatMessage("导入失败", "ai");
+                }
+            }
+        } else {
+            alert("请在原生客户端中使用此功能");
+        }
+    };
+
+    window.handleSaveProject = async () => {
+        if (window.pywebview && window.pywebview.api) {
+            const path = await window.pywebview.api.save_project_dialog();
+            if (path) {
+                addChatMessage(`保存项目到：${path}`, "ai");
+                // TODO: Save project data to file
+            }
+        } else {
+            alert("请在原生客户端中使用此功能");
+        }
+    };
+
     // --- Initial Setup ---
     if(refreshBtn) refreshBtn.addEventListener('click', fetchVideos);
     

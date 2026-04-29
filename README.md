@@ -45,7 +45,15 @@ python app_window.py
 - **前端**：Vanilla JS, HTML5, CSS3 (Glassmorphism, Dark Mode)
 - **原生封装**：PyWebView
 
-## 🆕 最新更新日志 (v1.0.0 核心版本)
+## 🆕 最新更新日志
+
+### v2.0.0 (Gravity Edit Pro - 工业级界面升级)
+- **🎨 专业级 NLE 界面重构**：全面采用达芬奇 (DaVinci Resolve) 与 Premiere Pro 风格的深色工业级 UI (Gravity Pro Design System)。
+- **🎛️ SPA 模块化工作流**：引入底部导航栏，无缝切换 Media (素材), Cut (剪辑), Edit (主工作区), Color (调色), Fairlight (音频), Deliver (导出) 模块。
+- **✨ 增强型监视器与检查器**：重构 AI 助理面板，将其与专业的属性检查器 (Inspector) 深度集成，实现交互的商业级进化。
+- **📊 专业波形与时间轴渲染**：引入全局 Mac 风格滚动条，深度定制 Tailwind CSS 玻璃拟物 (Glassmorphism) 与原生磁性时间轴 (Magnetic Timeline) 视觉表现。
+
+### v1.0.0 (核心 AI 剪辑版本)
 - **✨ 剪映级实战化 UI**：引入全套极客风暗黑工作台布局，包含横向时间轴、实时监视器与 AI 助理交互区。
 - **📁 原生导入交互**：使用 PyWebView 实现底层调用，支持调用 macOS 原生访达界面选择素材文件夹。
 - **🪄 画风智能聚类**：依据 Gemini 提取出的高频“语义特征”，自动为散乱的原片素材进行归类与建库。

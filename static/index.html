@@ -1,145 +1,279 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 编导助手 - 智能素材库</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Gravity Edit Pro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "surface": "#131313",
+                "surface-dim": "#131313",
+                "surface-container-low": "#1c1b1b",
+                "surface-container": "#201f1f",
+                "surface-container-high": "#2a2a2a",
+                "surface-container-highest": "#353534",
+                "primary": "#bdc2ff",
+                "primary-container": "#3e52ff",
+                "on-primary-container": "#e9e9ff",
+                "background": "#131313",
+                "on-surface": "#e5e2e1",
+                "on-surface-variant": "#c5c5d9",
+                "outline": "#8f8fa2",
+                "outline-variant": "#444656",
+              },
+              "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+              },
+              "fontFamily": {
+                "label-mono": ["Space Grotesk", "monospace"],
+                "body-md": ["Inter", "sans-serif"],
+                "label-bold": ["Inter", "sans-serif"]
+              }
+            }
+          }
+        }
+    </script>
 </head>
-<body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar glass-panel">
-            <div class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 10L19.5528 7.72361C20.2177 7.39116 21 7.87465 21 8.61803V15.382C21 16.1253 20.2177 16.6088 19.5528 16.2764L15 14V10Z" stroke="url(#paint0_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <rect x="3" y="6" width="12" height="12" rx="2" stroke="url(#paint1_linear)" stroke-width="2" stroke-linejoin="round"/>
-                    <defs>
-                        <linearGradient id="paint0_linear" x1="15" y1="11.8618" x2="21" y2="11.8618" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#4F46E5"/>
-                            <stop offset="1" stop-color="#EC4899"/>
-                        </linearGradient>
-                        <linearGradient id="paint1_linear" x1="3" y1="12" x2="15" y2="12" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#4F46E5"/>
-                            <stop offset="1" stop-color="#EC4899"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-                <h1>AI 编导助手</h1>
-            </div>
-            
-            <nav class="nav-menu">
-                <a href="#" class="nav-item active" data-view="gallery">素材图库</a>
-                <a href="#" class="nav-item" data-view="edit">智能剪辑 <span class="badge">Pro</span></a>
-                <a href="#" class="nav-item">生成分镜</a>
+<body class="bg-background text-on-surface select-none overflow-hidden h-screen w-screen flex flex-col antialiased">
+    
+    <!-- TopNavBar -->
+    <header class="flex justify-between items-center px-3 w-full h-10 z-50 bg-[#1C1C1C] border-b border-[#FFFFFF15] flex-shrink-0">
+        <div class="flex items-center gap-6">
+            <span class="text-sm font-bold text-white uppercase tracking-widest">Gravity Edit Pro</span>
+            <nav class="flex gap-4">
+                <a class="font-label-bold text-[13px] text-white hover:bg-[#FFFFFF10] px-2 py-1 rounded" href="#">File</a>
+                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">Edit</a>
+                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">Sequence</a>
+                <a class="font-label-bold text-[13px] text-gray-400 hover:text-white px-2 py-1 rounded" href="#">Window</a>
             </nav>
-            
-            <div class="scanner-section">
-                <h3>素材扫描器</h3>
-                <div class="input-group">
-                    <input type="text" id="dir-input" placeholder="/Users/h-l/Movies">
-                    <button id="browse-btn" class="btn-icon" title="浏览文件夹">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                    </button>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="scan-btn" class="flex items-center gap-1 text-gray-400 hover:text-white mr-2">
+                <span class="material-symbols-outlined text-[18px]">sync</span>
+                <span class="text-xs">Scan Local</span>
+            </button>
+            <button id="export-btn" class="bg-gradient-to-br from-[#3E52FF] to-[#6f00be] text-white px-4 py-1 rounded text-[12px] font-semibold hover:opacity-90 transition-opacity">Render Export</button>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden relative">
+        <!-- SideNavBar -->
+        <aside class="fixed left-0 top-10 bottom-12 flex flex-col items-center py-4 w-16 z-40 bg-[#1C1C1C] border-r border-[#FFFFFF15]">
+            <div class="flex flex-col items-center gap-6 w-full">
+                <div class="bg-[#3E52FF] text-white rounded-md p-2 flex items-center justify-center scale-95 cursor-pointer shadow-[0_0_15px_rgba(62,82,255,0.4)]">
+                    <span class="material-symbols-outlined">video_library</span>
                 </div>
-                <button id="scan-btn" class="btn-primary w-full" style="width: 100%; margin-bottom: 12px;">开始扫描</button>
-                <div id="scanner-logs" class="logs-container">
-                    <!-- Logs will appear here -->
-                    <div class="log-placeholder">等待扫描...</div>
+                <div class="text-gray-500 p-2 hover:text-white hover:bg-[#FFFFFF05] rounded-md transition-all cursor-pointer">
+                    <span class="material-symbols-outlined">auto_fix_high</span>
+                </div>
+                <div class="text-gray-500 p-2 hover:text-white hover:bg-[#FFFFFF05] rounded-md transition-all cursor-pointer">
+                    <span class="material-symbols-outlined">graphic_eq</span>
+                </div>
+            </div>
+            <div class="mt-auto flex flex-col items-center gap-4 w-full">
+                <div class="text-gray-500 p-2 hover:text-white hover:bg-[#FFFFFF05] rounded-md transition-all cursor-pointer">
+                    <span class="material-symbols-outlined">settings</span>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="header glass-panel">
-                <div class="search-bar">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" id="search-input" placeholder="输入你想找的画面 (例如：微笑、阳光、激烈运动)...">
+        <!-- Main Workspace Grid -->
+        <main class="ml-16 w-full h-[calc(100vh-88px)] grid grid-cols-12 grid-rows-12 gap-[2px] bg-[#0A0A0A] p-[2px]">
+            
+            <!-- Asset Library -->
+            <section class="col-span-3 row-span-7 bg-[#1C1C1C] flex flex-col border border-[#FFFFFF05] rounded-lg overflow-hidden">
+                <div class="flex items-center justify-between px-3 py-2 border-b border-[#FFFFFF05]">
+                    <span class="font-label-bold text-[11px] text-on-surface-variant uppercase">Asset Library</span>
+                    <button id="browse-btn" class="material-symbols-outlined text-gray-500 text-sm hover:text-white transition-colors cursor-pointer">add_folder</button>
                 </div>
-                <div class="header-actions">
-                    <button class="btn-icon" id="refresh-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-                    </button>
+                <div class="flex border-b border-[#FFFFFF05] text-[10px] font-label-bold uppercase">
+                    <button id="tab-all" class="flex-1 py-1.5 border-b-2 border-primary text-white bg-surface-container-high tab-btn" data-tab="all">All Media</button>
+                    <button id="tab-grouped" class="flex-1 py-1.5 border-b-2 border-transparent text-gray-500 hover:text-white tab-btn" data-tab="grouped">AI Groups</button>
                 </div>
-            </header>
-
-            <div id="view-gallery" class="view-container active">
-                <div class="tabs-header">
-                    <div class="tabs">
-                        <button class="tab-btn active" data-tab="all">全部素材 <span id="video-count">0</span></button>
-                        <button class="tab-btn" data-tab="grouped">智能分类</button>
+                <!-- Local Path Input (Hidden but functional) -->
+                <input type="text" id="dir-input" class="hidden" placeholder="Enter directory path...">
+                
+                <div class="flex-1 overflow-y-auto custom-scrollbar p-2" id="library-container">
+                    <div id="video-grid" class="grid grid-cols-2 gap-2 content-start tab-content block">
+                        <!-- Videos dynamically loaded -->
+                    </div>
+                    <div id="grouped-grid" class="flex flex-col gap-4 tab-content hidden">
+                        <!-- Grouped videos dynamically loaded -->
                     </div>
                 </div>
+            </section>
 
-                <div class="gallery-container tab-content active" id="tab-all">
-                    <div id="video-grid" class="video-grid">
-                        <!-- Video cards -->
+            <!-- Project Preview Monitor -->
+            <section class="col-span-6 row-span-7 bg-black flex flex-col items-center justify-center border border-[#FFFFFF05] rounded-lg overflow-hidden relative">
+                <div class="absolute top-3 inset-x-4 flex items-center justify-between z-10">
+                    <div class="flex items-center gap-3">
+                        <span class="text-[10px] font-label-mono px-2 py-0.5 bg-surface-container-high text-on-surface-variant border border-outline-variant rounded">1080P 30FPS</span>
+                        <span id="player-time" class="text-[10px] font-label-mono text-primary">00:00:00:00</span>
                     </div>
                 </div>
-
-                <div class="gallery-container tab-content" id="tab-grouped" style="display: none;">
-                    <div id="grouped-grid">
-                        <!-- Grouped categories -->
+                
+                <div class="w-full h-full relative group flex items-center justify-center bg-black">
+                    <!-- Video Element -->
+                    <video id="preview-player" class="max-w-full max-h-full object-contain hidden" controls></video>
+                    
+                    <!-- Overlay for empty state -->
+                    <div id="player-overlay" class="absolute inset-0 flex flex-col items-center justify-center text-zinc-600">
+                        <span class="material-symbols-outlined text-[48px] mb-2 opacity-50">smart_display</span>
+                        <p class="text-xs font-label-bold uppercase tracking-widest">Select clip to preview</p>
                     </div>
-                </div>
-            </div>
 
-            <div id="view-edit" class="view-container" style="display: none; background: #000; height: 100vh;">
-                <div class="editor-workspace">
-                    <!-- Top Section: Player and Assistant -->
-                    <div class="editor-top">
-                        <div class="editor-player-container">
-                            <video id="preview-player" controls preload="metadata">
-                                您的浏览器不支持视频播放。
-                            </video>
-                            <div class="player-overlay" id="player-overlay">点击下方轨道片段进行预览</div>
+                    <!-- Glassmorphic floating controls -->
+                    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 px-4 py-2 glass-panel rounded-full border border-[#FFFFFF15] opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="material-symbols-outlined text-white hover:text-primary-container cursor-pointer" onclick="document.getElementById('preview-player').currentTime -= 5">replay_5</span>
+                        <div class="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition-transform" onclick="const p = document.getElementById('preview-player'); p.paused ? p.play() : p.pause();">
+                            <span class="material-symbols-outlined text-white" id="play-pause-icon">play_arrow</span>
                         </div>
-                        
-                        <div class="editor-sidebar glass-panel">
-                            <div class="assistant-header">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#paint0_linear)" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 2a10 10 0 0 1 10 10H12V2z"></path></svg>
-                                <span>AI 剪辑助理</span>
+                        <span class="material-symbols-outlined text-white hover:text-primary-container cursor-pointer" onclick="document.getElementById('preview-player').currentTime += 5">forward_5</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inspector & AI Panel -->
+            <section class="col-span-3 row-span-12 bg-[#1C1C1C] flex flex-col border border-[#FFFFFF05] rounded-lg overflow-hidden">
+                <div class="flex border-b border-[#FFFFFF05]">
+                    <button class="flex-1 py-2 font-label-bold text-[11px] text-white border-b-2 border-primary-container">AI ASSISTANT</button>
+                    <button class="flex-1 py-2 font-label-bold text-[11px] text-gray-500 hover:text-white">INSPECTOR</button>
+                </div>
+                
+                <!-- AI Assistant View -->
+                <div class="flex-1 flex flex-col overflow-hidden">
+                    <div class="flex-1 p-3 overflow-y-auto custom-scrollbar flex flex-col gap-3" id="assistant-chat">
+                        <div class="flex items-start gap-2">
+                            <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(62,82,255,0.3)]">
+                                <span class="material-symbols-outlined text-white text-[14px]">smart_toy</span>
                             </div>
-                            <div class="assistant-chat" id="assistant-chat">
-                                <div class="chat-message ai">告诉我你的剪辑想法，例如：“帮我剪一个动感的运动高光。”</div>
-                            </div>
-                            <div class="assistant-input-box">
-                                <textarea id="edit-prompt" placeholder="描述你想要的视频..."></textarea>
-                                <button id="generate-edit-btn" class="btn-primary">生成轨道</button>
+                            <div class="bg-surface-container p-2.5 rounded-lg rounded-tl-none border border-outline-variant max-w-[85%]">
+                                <p class="text-[12px] text-zinc-300 font-body-md leading-relaxed">
+                                    I'm Gravity AI. Give me an edit prompt and I'll assemble a rough cut for you based on the assets in the library.
+                                </p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Bottom Section: Timeline -->
-                    <div class="editor-bottom glass-panel">
-                        <div class="timeline-header">
-                            <div class="timeline-tools">
-                                <span style="color: white; font-weight: bold; font-size: 14px;">时间轴轨道序列</span>
-                                <span id="timeline-duration" style="color: var(--text-secondary); margin-left: 12px; font-family: monospace;">00:00:00</span>
+                    <div class="p-3 border-t border-[#FFFFFF05] bg-surface">
+                        <textarea id="edit-prompt" class="w-full h-20 bg-surface-container-high border border-outline-variant rounded-md p-2 text-xs text-white placeholder-zinc-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all custom-scrollbar resize-none mb-2" placeholder="e.g. Create a fast-paced cyberpunk trailer using the neon shots..."></textarea>
+                        <button id="generate-edit-btn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-label-bold text-xs py-2 rounded-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(59,130,246,0.2)]">
+                            <span class="material-symbols-outlined text-[16px]">movie_edit</span>
+                            Generate Sequence
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Magnetic Timeline -->
+            <section class="col-span-9 row-span-5 bg-[#1C1C1C] flex flex-col border border-[#FFFFFF05] rounded-lg overflow-hidden relative">
+                <!-- Timeline Header / Tools -->
+                <div class="flex items-center justify-between px-3 h-8 border-b border-[#FFFFFF05] bg-[#1C1C1C] flex-shrink-0">
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-1">
+                            <div class="p-1 bg-primary-container text-white rounded"><span class="material-symbols-outlined text-sm">near_me</span></div>
+                            <div class="p-1 text-gray-400 hover:text-white cursor-pointer"><span class="material-symbols-outlined text-sm">content_cut</span></div>
+                        </div>
+                        <div class="h-4 w-[1px] bg-[#FFFFFF15]"></div>
+                        <span id="timeline-duration" class="text-[11px] font-label-mono text-primary">00:00:00:00</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-gray-500 hover:text-white cursor-pointer">zoom_out</span>
+                        <div class="w-32 h-1 bg-surface-container rounded-full"><div class="w-1/2 h-full bg-primary-container rounded-full"></div></div>
+                        <span class="material-symbols-outlined text-gray-500 hover:text-white cursor-pointer">zoom_in</span>
+                    </div>
+                </div>
+                
+                <!-- Timeline Tracks Area -->
+                <div class="flex-1 overflow-x-auto overflow-y-auto custom-scrollbar relative flex flex-col">
+                    <!-- Ruler / Timecode Bar -->
+                    <div class="h-6 border-b border-[#FFFFFF05] bg-surface-container-highest flex items-end px-2 sticky top-0 z-20">
+                        <div class="flex gap-[100px] pointer-events-none">
+                            <span class="text-[9px] font-label-mono text-gray-500 pb-0.5 border-l border-gray-700 pl-1">00:00</span>
+                            <span class="text-[9px] font-label-mono text-gray-500 pb-0.5 border-l border-gray-700 pl-1">00:15</span>
+                            <span class="text-[9px] font-label-mono text-gray-500 pb-0.5 border-l border-gray-700 pl-1">00:30</span>
+                            <span class="text-[9px] font-label-mono text-gray-500 pb-0.5 border-l border-gray-700 pl-1">00:45</span>
+                            <span class="text-[9px] font-label-mono text-gray-500 pb-0.5 border-l border-gray-700 pl-1">01:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Track Rows -->
+                    <div class="flex flex-col flex-1 relative min-w-[2000px]">
+                        <!-- Playhead (Absolute) -->
+                        <div class="absolute left-[0px] top-0 bottom-0 w-[2px] bg-[#3E52FF] z-30 pointer-events-none transition-transform duration-75" id="timeline-playhead" style="transform: translateX(0px);">
+                            <div class="absolute -top-1 -left-[5px] w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[8px] border-t-[#3E52FF]"></div>
+                        </div>
+
+                        <!-- V1 Track -->
+                        <div class="flex h-12 border-b border-[#FFFFFF05] bg-[#10131a]/50">
+                            <div class="w-12 sticky left-0 z-20 bg-[#1C1C1C] flex flex-col justify-center px-2 border-r border-[#FFFFFF05]">
+                                <span class="text-[10px] font-bold text-gray-500 uppercase">V1</span>
                             </div>
-                            <div class="timeline-export">
-                                <button id="export-btn" class="btn-primary">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    导出工程
-                                </button>
+                            <div class="flex-1 relative" id="main-video-track">
+                                <!-- Clips injected here by app.js -->
                             </div>
                         </div>
-                        <div class="timeline-tracks-container" id="timeline-tracks-container">
-                            <div class="time-ruler" id="time-ruler">
-                                <!-- Ruler markings will go here -->
+
+                        <!-- A1 Track -->
+                        <div class="flex h-10 border-b border-[#FFFFFF05] bg-[#10131a]/30">
+                            <div class="w-12 sticky left-0 z-20 bg-[#1C1C1C] flex flex-col justify-center px-2 border-r border-[#FFFFFF05]">
+                                <span class="text-[10px] font-bold text-gray-500 uppercase">A1</span>
                             </div>
-                            <div class="track video-track" id="main-video-track">
-                                <div class="empty-track-msg">轨道为空，请在上方输入指令让 AI 生成。</div>
+                            <div class="flex-1 relative">
+                                <div class="absolute inset-0 opacity-20 pointer-events-none waveform-bg"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
     </div>
-    
-    <script src="/static/app.js"></script>
+
+    <!-- BottomNavBar -->
+    <footer class="fixed bottom-0 left-0 w-full z-50 flex justify-center items-center h-12 space-x-8 px-10 bg-[#1C1C1C] border-t border-[#FFFFFF15]">
+        <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
+            <span class="material-symbols-outlined text-[20px]">perm_media</span>
+            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Media</span>
+        </button>
+        <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
+            <span class="material-symbols-outlined text-[20px]">content_cut</span>
+            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Cut</span>
+        </button>
+        <button class="flex flex-col items-center group transition-all duration-200 text-blue-500 border-t-2 border-blue-500 pt-1">
+            <span class="material-symbols-outlined text-[20px]">movie_edit</span>
+            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Edit</span>
+        </button>
+        <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
+            <span class="material-symbols-outlined text-[20px]">auto_fix_normal</span>
+            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Fusion</span>
+        </button>
+        <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
+            <span class="material-symbols-outlined text-[20px]">palette</span>
+            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Color</span>
+        </button>
+        <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
+            <span class="material-symbols-outlined text-[20px]">graphic_eq</span>
+            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Fairlight</span>
+        </button>
+        <button class="flex flex-col items-center group transition-all duration-200 text-gray-600 pt-1 hover:text-white">
+            <span class="material-symbols-outlined text-[20px]">ios_share</span>
+            <span class="font-label-bold text-[9px] uppercase tracking-widest mt-0.5">Deliver</span>
+        </button>
+    </footer>
+
+    <!-- Export Status Overlay -->
+    <div id="scanner-logs" class="fixed bottom-14 left-4 z-50 text-xs font-mono-label text-blue-400 opacity-0 transition-opacity bg-black/80 px-3 py-1 rounded"></div>
+
+    <script src="app.js"></script>
 </body>
 </html>
